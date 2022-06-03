@@ -36,36 +36,57 @@ class BSD_Directory extends Directory {
     }
 }
 
-abstract class File extends FileSystem {
+
+abstract class File extends FileSystem implements API{
     protected String name;
+    protected File handle;
 
     public String displayName() {
         return name;
     }
+
+    public int fprintf(File handle, String str) {
+        return -1;
+    }
+
 }
 
 
-class LINUX_File extends File {
+class LINUX_File extends File implements API {
+    public String name;
+    public File handleL;
     public LINUX_File() {
         name = new String("Linux File");
         System.out.println("Linux File Created...");
     }
+    public int uprintf(String str, File handle){
+
+        return 0;
+    }
 }
 
-class NT_File extends File {
+class NT_File extends File implements API{
     public NT_File() {
         name = new String("NT File");
         System.out.println("NT File Created...");
     }
+    public int printf (byte[] charArrray, File handle){
+        return -1;
+    }
 }
 
 
-class BSD_File extends File {
+class BSD_File extends File implements API{
     public BSD_File() {
         name = new String("BSD File");
         System.out.println("BSD File Created...");
     }
+    public int uprintf(String str, File handle){
+
+        return 0;
+    }
 }
+
 
 abstract class FileSystemFactory {
     abstract public Directory createDirectory();
