@@ -40,7 +40,7 @@ abstract class Devices {
 			}
 		}
 	}
-	//Notify the Observers.
+	// Notify the Observers.
 	public void Notify() {
 		// set argument to something that helps
 		// tell the Observers what happened
