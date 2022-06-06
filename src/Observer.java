@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+//IODEvices ArrayList olacak
+
 
 //============================================================================
 //Name        : ObserverPattern.java
@@ -25,8 +27,6 @@ abstract class Devices {
 	public Devices(String name) {
 		_name = name;
 	}
-
-
     //Register the Observers
 	public void Attach (RegisteredApplications regApps) {
 		registeredApplications.add(regApps);
@@ -48,6 +48,9 @@ abstract class Devices {
 			registeredApplications.get(i).Update(this);
 		}
 	}
+	public void Reset(Devices device) {
+		System.out.println("Resetting " + device.getName() + "...");
+	}
 	public String getName() {return _name;}
 	void setName(String value) {_name = value;}
 	protected String _name;          // Internal Subject state
@@ -57,19 +60,23 @@ abstract class Devices {
 //'ConcreteSubject' ==> IBM
 
 class HardDisk extends Devices {
-	// Constructor
+
 	public HardDisk(String name) {
 		super(name);
 	}
-	public String getName(){
-		return _name;
-	}
+
+
 	public void setName(String name) {
 		// Whenever a change happens to _price, notify
 		// observers.
 		_name = name;
 		Notify();
 	}
+
+
+
+
+
 }
 class CPU extends Devices {
     // Constructor

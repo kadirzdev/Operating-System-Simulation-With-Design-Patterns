@@ -2,7 +2,8 @@ import java.util.ArrayList;
 
 abstract class FileSystem {
 
-    abstract public String displayName();
+    abstract protected String displayName();
+
 
 }
 
@@ -13,7 +14,6 @@ abstract class Directory extends FileSystem {
         return name;
     }
 }
-
 
 class LINUX_Directory extends Directory {
     public LINUX_Directory() {
