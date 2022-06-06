@@ -1,9 +1,6 @@
 import java.util.ArrayList;
 
-abstract class FileSystem extends HardDisk {
-    public FileSystem(String name) {
-        super(name);
-    }
+abstract class FileSystem {
 
     abstract public String displayName();
 
@@ -11,10 +8,6 @@ abstract class FileSystem extends HardDisk {
 
 abstract class Directory extends FileSystem {
     protected String name;
-
-    public Directory(String name) {
-        super(name);
-    }
 
     public String displayName() {
         return name;
@@ -24,7 +17,6 @@ abstract class Directory extends FileSystem {
 
 class LINUX_Directory extends Directory {
     public LINUX_Directory() {
-        super("LINUX");
         name = new String("Linux Directory");
         System.out.println("Linux Directory Created...");
     }
@@ -32,7 +24,6 @@ class LINUX_Directory extends Directory {
 
 class NT_Directory extends Directory {
     public NT_Directory() {
-        super("NT");
         name = new String("NT Directory");
         System.out.println("NT Directory Created...");
     }
@@ -41,7 +32,6 @@ class NT_Directory extends Directory {
 
 class BSD_Directory extends Directory {
     public BSD_Directory() {
-        super("BSD");
         name = new String("BSD Directory");
         System.out.println("BSD Directory Created...");
     }
@@ -51,10 +41,6 @@ class BSD_Directory extends Directory {
 abstract class File extends FileSystem implements API{
     protected String name;
     protected File handle;
-
-    public File(String name) {
-        super(name);
-    }
 
     public String displayName() {
         return name;
@@ -71,7 +57,6 @@ class LINUX_File extends File implements API {
     public String name;
     public File handleL;
     public LINUX_File() {
-        super("LINUX");
         name = new String("Linux File");
         System.out.println("Linux File Created...");
     }
@@ -83,7 +68,6 @@ class LINUX_File extends File implements API {
 
 class NT_File extends File implements API{
     public NT_File() {
-        super("NT");
         name = new String("NT File");
         System.out.println("NT File Created...");
     }
@@ -95,7 +79,6 @@ class NT_File extends File implements API{
 
 class BSD_File extends File implements API{
     public BSD_File() {
-        super("BSD");
         name = new String("BSD File");
         System.out.println("BSD File Created...");
     }
