@@ -71,7 +71,7 @@ class HardDisk extends Devices {
 		Notify();
 	}
 	public void Reset() {
-		System.out.println(" Resetting " + _name + "...");
+		System.out.println("Resetting " + _name + "...");
 	}
 
 }
@@ -90,7 +90,7 @@ class CPU extends Devices {
 		Notify();
     }
 	public void Reset() {
-		System.out.println("Resetting CPU" + _name + "...");
+		System.out.println("Resetting " + _name + "...");
 	}
 }
 class IODevices extends Devices {
@@ -106,7 +106,7 @@ class IODevices extends Devices {
         Notify();
     }
 	public void Reset() {
-		System.out.println("Resetting IODevices" + _name + "...");
+		System.out.println("Resetting " + _name + "...");
 	}
 }
 

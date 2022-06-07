@@ -40,6 +40,40 @@ class HardDiskReset implements ResetDevice {
     private HardDisk _devices;
     private String _name;
 }
+
+//"ConcreteCommand"
+//
+class CPUReset implements ResetDevice {
+    // Constructor
+    public CPUReset(CPU devices, String name) {
+        _devices = devices;
+        _name = name;
+    }
+    public void Execute() {
+        _devices.Reset();
+    }
+
+    private CPU _devices;
+    private String _name;
+}
+
+
+//"ConcreteCommand"
+//
+class IODeviceReset implements ResetDevice {
+    // Constructor
+    public IODeviceReset(IODevices devices, String name) {
+        _devices = devices;
+        _name = name;
+    }
+    public void Execute() {
+        _devices.Reset();
+    }
+
+    private IODevices _devices;
+    private String _name;
+}
+
 // "Invoker"
 class OperatingSystem {
     public void Reset(ResetDevice resetDevice) {
@@ -58,6 +92,15 @@ public class Command {
         HardDisk devices = new HardDisk("HardDisk");
         resetDevice = new HardDiskReset(devices, "HardDisk");
         os.Reset(resetDevice);
+
+        CPU devices2 = new CPU("CPU");
+        resetDevice = new CPUReset(devices2, "CPU");
+        os.Reset(resetDevice);
+
+        IODevices devices3 = new IODevices("IO Devices");
+        resetDevice = new IODeviceReset(devices3, "IO Devices");
+        os.Reset(resetDevice);
+
 
     }
 }
