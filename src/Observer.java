@@ -175,10 +175,6 @@ public class Observer {
 		cpu.setName("New CPU2");
 		ioDevices.setName("new IO2");
 
-
-	    // We have a dangling reference in our Observer. Remember our
-	    // "implementation issues" discussion in the lecture.
-	    System.out.println(s.getDevices()); // Reference has a value.
 	}
 }
 
