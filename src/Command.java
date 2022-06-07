@@ -23,6 +23,7 @@ class IOReset implements resetDevice {
     private Devices IODevices;
 }
 class OperatingSystem {
+
     public void Reset(resetDevice resetDevice) {
         resetDevice.shutdown();
         devices.Reset(HardDisk);
