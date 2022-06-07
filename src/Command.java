@@ -1,58 +1,63 @@
-interface resetDevice {
-    public void shutdown();
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+//
+//The classes and/or objects participating in this pattern are:
+//
+//1. ResetDevice  (Command)
+//		- declares an interface for executing an operation.
+//2. ConcreteCommand  (HardDiskReset)
+//		- defines a binding between a Receiver object and an action.
+//		- implements Execute by invoking the corresponding operation(s) on Receiver
+//3. Client  (Main)
+//		- creates a ConcreteCommand object and sets its receiver.
+//4. Invoker  (OperatingSystem)
+//		- asks the command to carry out the request
+//5. Receiver  (HardDisk)
+//		- knows how to perform the operations associated with carrying out
+//		  a request. Any class may serve as a Receiver.
+//
+//
+
+//"Command"
+//
+interface ResetDevice {
+    void Execute();
 }
-class HardDiskReset implements resetDevice {
-    public void shutdown() {
-        devices.Reset(HardDisk);
+//"ConcreteCommand"
+//
+class HardDiskReset implements ResetDevice {
+    // Constructor
+    public HardDiskReset(HardDisk devices, String name) {
+        _devices = devices;
+        _name = name;
     }
-    private Devices devices;
-    private Devices HardDisk;
-}
-class CPUReset implements resetDevice {
-    public void shutdown() {
-        devices.Reset(CPU);
+    public void Execute() {
+        _devices.Reset();
     }
-    private Devices devices;
-    private Devices CPU;
+
+    private HardDisk _devices;
+    private String _name;
 }
-class IOReset implements resetDevice {
-    public void shutdown() {
-        devices.Reset(IODevices);
-    }
-    private Devices devices;
-    private Devices IODevices;
-}
+// "Invoker"
 class OperatingSystem {
-
-    public void Reset(resetDevice resetDevice) {
-        resetDevice.shutdown();
-        devices.Reset(HardDisk);
-        devices.Reset(CPU);
-        devices.Reset(IODevices);
-
+    public void Reset(ResetDevice resetDevice) {
+        ResetDevice _resetDevice = resetDevice;
+        resetDevice.Execute();
     }
-    private Devices devices;
-    private Devices HardDisk;
-    private Devices CPU;
-    private Devices IODevices;
-}
 
-class GenericReset implements resetDevice{
-    public void shutdown() {
-        devices.Reset(HardDisk);
-        devices.Reset(CPU);
-        devices.Reset(IODevices);
-    }
-    private Devices devices;
-    private Devices HardDisk;
-    private Devices CPU;
-    private Devices IODevices;
-
-
-}
+};
 
 public class Command {
     public static void main(String[] args) {
+
+        // Create user and let her compute
+        ResetDevice resetDevice = null;
+        OperatingSystem os = new OperatingSystem();
+        HardDisk devices = new HardDisk("HardDisk");
+        resetDevice = new HardDiskReset(devices, "HardDisk");
+        os.Reset(resetDevice);
 
     }
 }

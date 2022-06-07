@@ -48,17 +48,15 @@ abstract class Devices {
 			registeredApplications.get(i).Update(this);
 		}
 	}
-	public void Reset(Devices device) {
-		System.out.println("Resetting " + device.getName() + "...");
-	}
 	public String getName() {return _name;}
 	void setName(String value) {_name = value;}
 	protected String _name;          // Internal Subject state
 	protected ArrayList<RegisteredApplications> registeredApplications = new ArrayList<RegisteredApplications>();
+	abstract public  void Reset();
 }
 
 //'ConcreteSubject' ==> IBM
-
+//receiverHardDisk
 class HardDisk extends Devices {
 
 	public HardDisk(String name) {
@@ -72,10 +70,9 @@ class HardDisk extends Devices {
 		_name = name;
 		Notify();
 	}
-
-
-
-
+	public void Reset() {
+		System.out.println(" Resetting " + _name + "...");
+	}
 
 }
 class CPU extends Devices {
@@ -92,6 +89,9 @@ class CPU extends Devices {
 		_name = name;
 		Notify();
     }
+	public void Reset() {
+		System.out.println("Resetting CPU" + _name + "...");
+	}
 }
 class IODevices extends Devices {
     // Constructor
@@ -105,6 +105,9 @@ class IODevices extends Devices {
         _name = name;
         Notify();
     }
+	public void Reset() {
+		System.out.println("Resetting IODevices" + _name + "...");
+	}
 }
 
 //'Observer'  ==> Abstract Observer.
@@ -171,6 +174,7 @@ public class Observer {
 		hardDisk.setName("new HardDisk2");
 		cpu.setName("New CPU2");
 		ioDevices.setName("new IO2");
+
 
 	    // We have a dangling reference in our Observer. Remember our
 	    // "implementation issues" discussion in the lecture.
