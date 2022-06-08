@@ -1,116 +1,109 @@
+package Project2;
+
 import java.util.ArrayList;
 
-abstract class FileSystem extends HardDisk {
-    public FileSystem(String name) {
-        super(name);
-    }
+//**********************
+//*NERGİS GİZEM YILMAZ *
+//*BEGÜM KÜÇÜK         *
+//*YAĞMUR ZEYNEP TOPRAK*
+//*SUPHİ KADİR ÖZARPACI*
+//*OS Modelling        *
+//**********************
 
+//Top Class of the File&Directory
+abstract class FileSystem {
     abstract protected String displayName();
-
-
 }
 
+//AbstractProductA
 abstract class Directory extends FileSystem {
     protected String name;
-
-    public Directory(String name) {
-        super(name);
-    }
 
     public String displayName() {
         return name;
     }
 }
 
+//AbstractProductA1
 class LINUX_Directory extends Directory {
     public LINUX_Directory() {
-        super("LINUX");
         name = new String("Linux Directory");
         System.out.println("Linux Directory Created...");
     }
 }
 
+//AbstractProductA2
 class NT_Directory extends Directory {
     public NT_Directory() {
-        super("NT");
         name = new String("NT Directory");
         System.out.println("NT Directory Created...");
     }
 }
 
-
+//AbstractProductA3
 class BSD_Directory extends Directory {
     public BSD_Directory() {
-        super("BSD");
         name = new String("BSD Directory");
         System.out.println("BSD Directory Created...");
     }
 }
 
-
-abstract class File extends FileSystem implements API{
+//AbstractProductB
+abstract class File extends FileSystem{
     protected String name;
     protected File handle;
-    public File(String name) {
-        super(name);
-    }
 
     public String displayName() {
         return name;
     }
 
-    public int fprintf(File handle, String str) {
-        return -1;
-    }
-
 }
 
-
-class LINUX_File extends File implements API {
+//AbstractProductB1
+class LINUX_File extends File{
     public File handleL;
     public LINUX_File() {
-        super("LINUX");
         name = new String("Linux File");
         System.out.println("Linux File Created...");
     }
+    //Adaptee of the adapter pattern
     public int uprintf(String str, File handle){
         return -1;
     }
 }
 
-class NT_File extends File implements API{
+//AbstractProductB2
+class NT_File extends File{
     public NT_File() {
-        super("NT");
         name = new String("NT File");
         System.out.println("NT File Created...");
     }
+    //Adaptee of the adapter pattern
     public int printf (byte[] charArrray, File handle){
         return -1;
     }
 }
 
-
-class BSD_File extends File implements API{
+//AbstractProductB3
+class BSD_File extends File{
     public BSD_File() {
-        super("BSD");
         name = new String("BSD File");
         System.out.println("BSD File Created...");
     }
+    //Adaptee of the adapter pattern
     public int uprintf(String str, File handle){
 
-        return 0;
+        return -1;
     }
 }
 
-
+//AbstractFactory
 abstract class FileSystemFactory {
     abstract public Directory createDirectory();
     abstract public File createFile();
-    //singleton
-    private static FileSystemFactory instance = null;
-
 }
 
+//ConcreteFactory1
 class LinuxFileSystemFactory extends FileSystemFactory {
     public LINUX_Directory createDirectory() {
         return new LINUX_Directory();
@@ -118,7 +111,7 @@ class LinuxFileSystemFactory extends FileSystemFactory {
     public LINUX_File createFile() {
         return new LINUX_File();
     }
-    //singleton
+    //Singleton Pattern
     public static FileSystemFactory getInstance() {
         if (instance == null) {
             instance = new LinuxFileSystemFactory();
@@ -128,6 +121,7 @@ class LinuxFileSystemFactory extends FileSystemFactory {
     private static LinuxFileSystemFactory instance = null;
 }
 
+//ConcreteFactory2
 class NTFileSystemFactory extends FileSystemFactory {
     public NT_Directory createDirectory() {
         return new NT_Directory();
@@ -135,7 +129,7 @@ class NTFileSystemFactory extends FileSystemFactory {
     public NT_File createFile() {
         return new NT_File();
     }
-    //singleton
+    //Singleton Pattern
     public static FileSystemFactory getInstance() {
         if (instance == null) {
             instance = new NTFileSystemFactory();
@@ -145,6 +139,7 @@ class NTFileSystemFactory extends FileSystemFactory {
     private static NTFileSystemFactory instance = null;
 }
 
+//ConcreteFactory3
 class BSDFileSystemFactory extends FileSystemFactory {
     public BSD_Directory createDirectory() {
         return new BSD_Directory();
@@ -152,7 +147,7 @@ class BSDFileSystemFactory extends FileSystemFactory {
     public BSD_File createFile() {
         return new BSD_File();
     }
-    //singleton
+    //Singleton Pattern
     public static FileSystemFactory getInstance() {
         if (instance == null) {
             instance = new BSDFileSystemFactory();
@@ -164,7 +159,6 @@ class BSDFileSystemFactory extends FileSystemFactory {
 
 //The 'Client'
 class BuildFileSystem {
-    // Object creation is delegated to factory.
     public void createFileSystem(FileSystemFactory factory) {
         fileSystems = new ArrayList<FileSystem>();
         fileSystems.add(factory.createDirectory());
@@ -198,7 +192,5 @@ public class AbstractFactory {
         System.out.println("Creating BSD File System");
         fileSystem.createFileSystem(BSD);
         fileSystem.displayFileSystems();
-
-
     }
 }

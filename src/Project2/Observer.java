@@ -1,6 +1,15 @@
-import java.util.ArrayList;
-//IODEvices ArrayList olacak
+package Project2;
 
+import java.util.ArrayList;
+
+//**********************
+//*NERGİS GİZEM YILMAZ *
+//*BEGÜM KÜÇÜK         *
+//*YAĞMUR ZEYNEP TOPRAK*
+//*SUPHİ KADİR ÖZARPACI*
+//*OS Modelling        *
+//**********************
+//
 
 //============================================================================
 //Name        : ObserverPattern.java
@@ -22,7 +31,7 @@ import java.util.ArrayList;
 //     consistent with the subject's
 
 
-//'Subject' ==> Stock
+//'Subject' ==> Devices
 abstract class Devices {
 	public Devices(String name) {
 		_name = name;
@@ -50,33 +59,35 @@ abstract class Devices {
 	}
 	public String getName() {return _name;}
 	void setName(String value) {_name = value;}
-	protected String _name;          // Internal Subject state
+	protected String _name;
 	protected ArrayList<RegisteredApplications> registeredApplications = new ArrayList<RegisteredApplications>();
 	abstract public  void Reset();
 }
 
-//'ConcreteSubject' ==> IBM
-//receiverHardDisk
+//'ConcreteSubject' ==> HardDisk
+//ReceiverHardDisk
 class HardDisk extends Devices {
-
+	//HardDisk has FileSystem
+	FileSystem fileSystem = new FileSystem() {
+		protected String displayName() {
+			return null;
+		}
+	};
 	public HardDisk(String name) {
 		super(name);
 	}
-
-
 	public void setName(String name) {
-		// Whenever a change happens to _price, notify
-		// observers.
 		_name = name;
 		Notify();
 	}
 	public void Reset() {
 		System.out.println("Resetting " + _name + "...");
 	}
-
 }
+
+//'ConcreteSubject' ==> CPU
+//ReceiverCPU
 class CPU extends Devices {
-    // Constructor
     public CPU(String name) {
         super(name);
     }
@@ -93,15 +104,15 @@ class CPU extends Devices {
 		System.out.println("Resetting " + _name + "...");
 	}
 }
+
+//'ConcreteSubject' ==> IODevices
+//ReceiverIODevice
 class IODevices extends Devices {
-    // Constructor
     public IODevices(String name) {
         super(name);
     }
     public String getName() {return _name;}
     public void setName(String name) {
-        // Whenever a change happens to _price, notify
-        // observers.
         _name = name;
         Notify();
     }
@@ -110,24 +121,22 @@ class IODevices extends Devices {
 	}
 }
 
-//'Observer'  ==> Abstract Observer.
-
+//'Observer'  ==> Applications.
 interface Applications {
 	public void Update(Devices devices);
 }
 
-//'ConcreteObserver' ==> Investor
-
+//'ConcreteObserver' ==> RegisteredApplications
 class RegisteredApplications implements Applications {
 	private Devices _devices;
 	private String _regAp_name;
-	private String _device_name;     // Internal Observer state
+	private String _device_name;
 	// Constructor
 	public RegisteredApplications(String name) {
 		_regAp_name = name;
 	}
 	public void Update(Devices devices) {
-		 _devices = devices; 				 // Reference to Subject
+		 _devices = devices;
 		 _device_name = devices.getName();
 		 System.out.println("Notified " + _regAp_name + " of " + _device_name +
 		         "'s " + "change to ");
@@ -140,11 +149,9 @@ class RegisteredApplications implements Applications {
 //MainApp test application
 public class Observer {
 	public static void main(String[] args) {
-		// Create investors
-	    RegisteredApplications s = new RegisteredApplications("Ahmet");
-		RegisteredApplications b = new RegisteredApplications("Ayse");
+	    RegisteredApplications s = new RegisteredApplications("ApplicationA");
+		RegisteredApplications b = new RegisteredApplications("ApplicationB");
 
-	    // Create IBM stock and attach investors
 	    HardDisk hardDisk = new HardDisk("Hard Disk");
 		CPU cpu = new CPU("CPU");
 		IODevices ioDevices = new IODevices("I/O Devices");
@@ -162,18 +169,18 @@ public class Observer {
 		cpu.Attach(b);
 		ioDevices.Attach(b);
 
-		hardDisk.setName("new HardDisk");
-		cpu.setName("New CPU");
-		ioDevices.setName("new IO");
+		hardDisk.setName("interrupt from HardDisk");
+		cpu.setName("interrupt from CPU");
+		ioDevices.setName("interrupt from CPU");
 
 
-	    System.out.println("Removing Ayse from Notification list");
+	    System.out.println("Removing ApplicationB from Notification list");
 	    hardDisk.Detach(b);
 		cpu.Detach(b);
 		ioDevices.Detach(b);
-		hardDisk.setName("new HardDisk2");
-		cpu.setName("New CPU2");
-		ioDevices.setName("new IO2");
+		hardDisk.setName("new interrupt from HardDisk");
+		cpu.setName("New interrupt from CPU");
+		ioDevices.setName("new interrupt from CPU");
 
 	}
 }

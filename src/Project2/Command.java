@@ -1,23 +1,11 @@
-
-import java.util.ArrayList;
-import java.util.Iterator;
-
-//
-//The classes and/or objects participating in this pattern are:
-//
-//1. ResetDevice  (Command)
-//		- declares an interface for executing an operation.
-//2. ConcreteCommand  (HardDiskReset)
-//		- defines a binding between a Receiver object and an action.
-//		- implements Execute by invoking the corresponding operation(s) on Receiver
-//3. Client  (Main)
-//		- creates a ConcreteCommand object and sets its receiver.
-//4. Invoker  (OperatingSystem)
-//		- asks the command to carry out the request
-//5. Receiver  (HardDisk)
-//		- knows how to perform the operations associated with carrying out
-//		  a request. Any class may serve as a Receiver.
-//
+package Project2;
+//**********************
+//*NERGİS GİZEM YILMAZ *
+//*BEGÜM KÜÇÜK         *
+//*YAĞMUR ZEYNEP TOPRAK*
+//*SUPHİ KADİR ÖZARPACI*
+//*OS Modelling        *
+//**********************
 //
 
 //"Command"
@@ -80,14 +68,11 @@ class OperatingSystem {
         ResetDevice _resetDevice = resetDevice;
         resetDevice.Execute();
     }
-
 };
 
 public class Command {
     public static void main(String[] args) {
-
-        // Create user and let her compute
-        ResetDevice resetDevice = null;
+        ResetDevice resetDevice;
         OperatingSystem os = new OperatingSystem();
         HardDisk devices = new HardDisk("HardDisk");
         resetDevice = new HardDiskReset(devices, "HardDisk");
@@ -100,7 +85,5 @@ public class Command {
         IODevices devices3 = new IODevices("IO Devices");
         resetDevice = new IODeviceReset(devices3, "IO Devices");
         os.Reset(resetDevice);
-
-
     }
 }
