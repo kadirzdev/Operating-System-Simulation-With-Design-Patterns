@@ -8,6 +8,8 @@ package Project2;
 //**********************
 //
 
+import java.util.ArrayList;
+
 //"Command"
 //
 interface ResetDevice {
@@ -58,8 +60,22 @@ class IODeviceReset implements ResetDevice {
         _devices.Reset();
     }
 
+
     private IODevices _devices;
     private String _name;
+}
+
+class ResetAllDevices implements ResetDevice {
+    public ResetAllDevices(ArrayList<ResetDevice> devices) {
+        _devices = devices;
+    }
+    public void Execute() {
+        for (ResetDevice device : _devices) {
+            device.Execute();
+        }
+    }
+
+    private ArrayList<ResetDevice> _devices;
 }
 
 // "Invoker"

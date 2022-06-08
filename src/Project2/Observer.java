@@ -1,6 +1,7 @@
 package Project2;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 //**********************
 //*NERGİS GİZEM YILMAZ *
@@ -49,6 +50,130 @@ abstract class Devices {
 			}
 		}
 	}
+
+	// Display Devices
+	public static void DeviceSelect() {
+
+		System.out.println("SYSTEM CONTROL PANEL");
+		System.out.println("HARDDISK");
+		System.out.println("CPU");
+		System.out.println("IODEVICES");
+		System.out.println("MACRO COMMANDS");
+
+		// Upper Choice
+		Scanner sc = new Scanner(System.in); //System.in is a standard input stream
+		String selectedDevice = sc.nextLine(); //reads string
+
+		switch (selectedDevice.toUpperCase()) {
+			case "HARDDISK":
+				System.out.println("HardDisk Commands");
+				System.out.println("RESET - Resets the HardDisk");
+				System.out.println("ADD NOTIFIER - Notifies the registered applications");
+				System.out.println("REMOVE NOTIFIER - Removes the registered applications");
+
+				String hdAction = sc.nextLine().toUpperCase(); //reads string
+
+				switch (hdAction) {
+
+					case "RESET":
+						ResetDevice resetDevice;
+						OperatingSystem os = new OperatingSystem();
+						HardDisk devices = new HardDisk("HardDisk");
+						resetDevice = new HardDiskReset(devices, "HardDisk");
+						os.Reset(resetDevice);
+						break;
+					case "ADD NOTIFIER":
+						break;
+					case "REMOVE NOTIFIER":
+
+				}
+				break;
+			case "CPU":
+				System.out.println("CPU Commands");
+				System.out.println("RESET - Resets the CPU");
+				System.out.println("ADD NOTIFIER - Notifies the registered applications");
+				System.out.println("REMOVE NOTIFIER - Removes the registered applications");
+
+				String cpuAction = sc.nextLine().toUpperCase(); //reads string
+
+				switch (cpuAction) {
+
+					case "RESET":
+						ResetDevice resetDevice;
+						OperatingSystem os = new OperatingSystem();
+						CPU devices = new CPU("CPU");
+						resetDevice = new CPUReset(devices, "CPU");
+						os.Reset(resetDevice);
+						break;
+					case "ADD NOTIFIER":
+						break;
+					case "REMOVE NOTIFIER":
+
+				}
+				break;
+			case "IODEVICES":
+				System.out.println("ID DEVICE Commands");
+				System.out.println("RESET - Resets the IODevices");
+				System.out.println("ADD NOTIFIER - Notifies the registered applications");
+				System.out.println("REMOVE NOTIFIER - Removes the registered applications");
+
+				String IOAction = sc.nextLine().toUpperCase(); //reads string
+
+				switch (IOAction) {
+
+					case "RESET":
+						ResetDevice resetDevice;
+
+						OperatingSystem os = new OperatingSystem();
+						IODevices devices = new IODevices("IO Device");
+						resetDevice = new IODeviceReset(devices, "IO Device");
+						os.Reset(resetDevice);
+						break;
+					case "ADD NOTIFIER":
+						String applicationName = sc.nextLine().toUpperCase(); //reads string
+						RegisteredApplications s = new RegisteredApplications(applicationName);
+						IODevices ioDevices = new IODevices("I/O Devices");
+						s.setDevices(ioDevices);
+						ioDevices.Attach(s);
+						DeviceSelect();
+					case "REMOVE NOTIFIER":
+
+				}
+				break;
+			case "MACRO COMMANDS":
+				System.out.println("RESETALL - Resets all the devices");
+				String GenericReset = sc.nextLine().toUpperCase(); //reads string
+
+				switch (GenericReset) {
+
+					case "RESETALL":
+						ResetDevice resetDevice;
+						OperatingSystem os = new OperatingSystem();
+						HardDisk devices = new HardDisk("HardDisk");
+						CPU devices2 = new CPU("CPU");
+						IODevices devices3 = new IODevices("IO Devices");
+						ArrayList<ResetDevice> devices4 = new ArrayList<ResetDevice>();
+						devices4.add(new HardDiskReset(devices, "HardDisk"));
+						devices4.add(new CPUReset(devices2, "CPU"));
+						devices4.add(new IODeviceReset(devices3, "IO Devices"));
+						resetDevice = new ResetAllDevices(devices4);
+						os.Reset(resetDevice);
+						break;
+					case "ADD NOTIFIER":
+						System.out.println("ADDALL - Notifies the registered ALL applications");
+						break;
+					case "REMOVE NOTIFIER":
+						System.out.println("REMOVEALL - Removes the registered ALL applications");
+				}
+				break;
+
+			default:
+				System.out.println("Please enter HardDisk, CPU or IODevices");
+				break;
+		}
+	}
+
+
 	// Notify the Observers.
 	public void Notify() {
 		// set argument to something that helps
@@ -149,38 +274,14 @@ class RegisteredApplications implements Applications {
 //MainApp test application
 public class Observer {
 	public static void main(String[] args) {
-	    RegisteredApplications s = new RegisteredApplications("ApplicationA");
-		RegisteredApplications b = new RegisteredApplications("ApplicationB");
-
-	    HardDisk hardDisk = new HardDisk("Hard Disk");
-		CPU cpu = new CPU("CPU");
-		IODevices ioDevices = new IODevices("I/O Devices");
-
-		s.setDevices(hardDisk);
-		s.setDevices(cpu);
-		s.setDevices(ioDevices);
-		b.setDevices(hardDisk);
-		b.setDevices(cpu);
-		b.setDevices(ioDevices);
-		hardDisk.Attach(s);
-		cpu.Attach(s);
-		ioDevices.Attach(s);
-		hardDisk.Attach(b);
-		cpu.Attach(b);
-		ioDevices.Attach(b);
-
-		hardDisk.setName("interrupt from HardDisk");
-		cpu.setName("interrupt from CPU");
-		ioDevices.setName("interrupt from CPU");
 
 
-	    System.out.println("Removing ApplicationB from Notification list");
-	    hardDisk.Detach(b);
-		cpu.Detach(b);
-		ioDevices.Detach(b);
-		hardDisk.setName("new interrupt from HardDisk");
-		cpu.setName("New interrupt from CPU");
-		ioDevices.setName("new interrupt from CPU");
+
+		Devices.DeviceSelect();
+
+
+
+
 
 	}
 }

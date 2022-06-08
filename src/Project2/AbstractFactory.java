@@ -1,12 +1,15 @@
 package Project2;
 
+import javax.swing.plaf.MenuBarUI;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Scanner;
 
 //**********************
 //*NERGİS GİZEM YILMAZ *
 //*BEGÜM KÜÇÜK         *
-//*YAĞMUR ZEYNEP TOPRAK*
-//*SUPHİ KADİR ÖZARPACI*
+//*YAGMUR ZEYNEP TOPRAK*
+//*SUPHI KADIR OZARPACI*
 //*OS Modelling        *
 //**********************
 
@@ -102,10 +105,28 @@ abstract class FileSystemFactory {
     abstract public Directory createDirectory();
     abstract public File createFile();
 
+    static Scanner sc = new Scanner(System.in); //System.in is a standard input stream
+    static String fileSystemType = sc.nextLine();              //reads string
+
     //Singleton Pattern
     public static FileSystemFactory getInstance() {
         if (instance == null) {
-            instance = new LinuxFileSystemFactory();
+
+            switch (fileSystemType.toUpperCase()) {
+                case "LINUX":
+                    instance = new LinuxFileSystemFactory();
+                    break;
+                case "NT":
+                    instance = new NTFileSystemFactory();
+                    break;
+                case "BSD":
+                    instance = new BSDFileSystemFactory();
+                    break;
+                default:
+                    System.out.println("Please enter LINUX, NT or BSD");
+                    break;
+            }
+
         }
         return instance;
     }
@@ -164,20 +185,15 @@ class BuildFileSystem {
 //Entry point into main application.
 public class AbstractFactory {
     public static void main(String[] args) {
-        // Create factories.
-        FileSystemFactory LINUX = FileSystemFactory.getInstance();
-        FileSystemFactory NT    = FileSystemFactory.getInstance();
+        // Create FileSystemType.
+        System.out.println("Please select a file system type: ");
+        FileSystemFactory FileSystemType = FileSystemFactory.getInstance();
 
         BuildFileSystem fileSystem = new BuildFileSystem();
-        System.out.println("Creating LINUX File System");
-        fileSystem.createFileSystem(LINUX);
+        fileSystem.createFileSystem(FileSystemType);
         fileSystem.displayFileSystems();
 
-        System.out.println("Creating NT File System");
-        fileSystem.createFileSystem(NT);
-        fileSystem.displayFileSystems();
 
-        System.out.println(LINUX == NT);
 
 
     }
