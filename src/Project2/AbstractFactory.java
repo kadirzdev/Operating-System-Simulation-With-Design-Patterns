@@ -101,6 +101,16 @@ class BSD_File extends File{
 abstract class FileSystemFactory {
     abstract public Directory createDirectory();
     abstract public File createFile();
+
+    //Singleton Pattern
+    public static FileSystemFactory getInstance() {
+        if (instance == null) {
+            instance = new LinuxFileSystemFactory();
+        }
+        return instance;
+    }
+    private static FileSystemFactory instance = null;
+
 }
 
 //ConcreteFactory1
@@ -110,13 +120,6 @@ class LinuxFileSystemFactory extends FileSystemFactory {
     }
     public LINUX_File createFile() {
         return new LINUX_File();
-    }
-    //Singleton Pattern
-    public static FileSystemFactory getInstance() {
-        if (instance == null) {
-            instance = new LinuxFileSystemFactory();
-        }
-        return instance;
     }
     private static LinuxFileSystemFactory instance = null;
 }
@@ -129,13 +132,6 @@ class NTFileSystemFactory extends FileSystemFactory {
     public NT_File createFile() {
         return new NT_File();
     }
-    //Singleton Pattern
-    public static FileSystemFactory getInstance() {
-        if (instance == null) {
-            instance = new NTFileSystemFactory();
-        }
-        return instance;
-    }
     private static NTFileSystemFactory instance = null;
 }
 
@@ -146,13 +142,6 @@ class BSDFileSystemFactory extends FileSystemFactory {
     }
     public BSD_File createFile() {
         return new BSD_File();
-    }
-    //Singleton Pattern
-    public static FileSystemFactory getInstance() {
-        if (instance == null) {
-            instance = new BSDFileSystemFactory();
-        }
-        return instance;
     }
     private static BSDFileSystemFactory instance = null;
 }
@@ -176,9 +165,8 @@ class BuildFileSystem {
 public class AbstractFactory {
     public static void main(String[] args) {
         // Create factories.
-        FileSystemFactory LINUX = LinuxFileSystemFactory.getInstance();
-        FileSystemFactory NT    = NTFileSystemFactory.getInstance();
-        FileSystemFactory BSD   = BSDFileSystemFactory.getInstance();
+        FileSystemFactory LINUX = FileSystemFactory.getInstance();
+        FileSystemFactory NT    = FileSystemFactory.getInstance();
 
         BuildFileSystem fileSystem = new BuildFileSystem();
         System.out.println("Creating LINUX File System");
@@ -189,8 +177,8 @@ public class AbstractFactory {
         fileSystem.createFileSystem(NT);
         fileSystem.displayFileSystems();
 
-        System.out.println("Creating BSD File System");
-        fileSystem.createFileSystem(BSD);
-        fileSystem.displayFileSystems();
+        System.out.println(LINUX == NT);
+
+
     }
 }
