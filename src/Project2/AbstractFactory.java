@@ -184,17 +184,5 @@ class BuildFileSystem {
 //Abstract Factory Method Design Pattern.
 //Entry point into main application.
 public class AbstractFactory {
-    public static void main(String[] args) {
-        // Create FileSystemType.
-        System.out.println("Please select a file system type: ");
-        FileSystemFactory FileSystemType = FileSystemFactory.getInstance();
 
-        BuildFileSystem fileSystem = new BuildFileSystem();
-        fileSystem.createFileSystem(FileSystemType);
-        fileSystem.displayFileSystems();
-
-
-
-
-    }
 }

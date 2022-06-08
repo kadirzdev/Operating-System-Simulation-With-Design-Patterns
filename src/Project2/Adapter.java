@@ -47,17 +47,13 @@ class Compiler implements API {
     private NT_File _adapteeN;
 
 }
-
-
 // This is our client which will be using
 // the Target (NASocket) Interface.
 
 public class Adapter {
     public static void main(String[] args) {
-
         // Create adapter and place a request
         API file = new Compiler (new LINUX_File(), new BSD_File(), new NT_File());
-
     }
 }
 
